@@ -86,27 +86,27 @@ sfs gilbertAnalysis::analyseHitBuffer(std::vector<float>& hitBuffer, std::string
 }
 
 //--------------------------------------------------------------
-// void gilbertAnalysis::writeWAV(std::vector<float>& buffer, int bufferSize, std::string drum, sfs info){
-//     float* exactHitArray;
-//     exactHitArray = new float[buffer.size()];
-//     for(int j = 0; j<buffer.size(); j++){
-//         exactHitArray[j] = buffer[j];
-//     }
-//     // define the desired output format
-//     SF_INFO sfinfo ;
-//     sfinfo.channels = 1;
-//     sfinfo.samplerate = 44100;
-//     sfinfo.format = SF_FORMAT_WAV | SF_FORMAT_PCM_16;
+void gilbertAnalysis::writeWAV(std::vector<float>& buffer, int bufferSize, std::string drum, sfs info){
+    float* exactHitArray;
+    exactHitArray = new float[buffer.size()];
+    for(int j = 0; j<buffer.size(); j++){
+        exactHitArray[j] = buffer[j];
+    }
+    // define the desired output format
+    SF_INFO sfinfo ;
+    sfinfo.channels = 1;
+    sfinfo.samplerate = 44100;
+    sfinfo.format = SF_FORMAT_WAV | SF_FORMAT_PCM_16;
     
-//     std::string path = "../../../";
-//     path+=drum;
-//     path+=".wav";
-//     std::cout << path.c_str() << std::endl;
+    std::string path = "../../../";
+    path+=drum;
+    path+=".wav";
+    std::cout << path.c_str() << std::endl;
     
-//     SNDFILE * outfile = sf_open(path.c_str(), SFM_WRITE, &sfinfo);
-//     char strbuf[50];
-//     sf_set_string(outfile, SF_STR_COMMENT, strbuf);
-//     sf_count_t count = sf_write_float(outfile, &exactHitArray[0], bufferSize);
-//     sf_write_sync(outfile);
-//     sf_close(outfile);
-// }
+    SNDFILE * outfile = sf_open(path.c_str(), SFM_WRITE, &sfinfo);
+    char strbuf[50];
+    sf_set_string(outfile, SF_STR_COMMENT, strbuf);
+    sf_count_t count = sf_write_float(outfile, &exactHitArray[0], bufferSize);
+    sf_write_sync(outfile);
+    sf_close(outfile);
+}

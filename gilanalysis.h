@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <vector>
+#include <sndfile.h>
 #include <math.h>
 #include "fft.h"
 #include "soundfeatureset.c"

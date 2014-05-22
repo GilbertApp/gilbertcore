@@ -9,75 +9,96 @@ float gilbertAnalysis::calcRMS(std::vector<float>& buffer){
     }
     count = count/buffer.size();
     return sqrt(count);
+
 }
 
 //--------------------------------------------------------------
 float gilbertAnalysis::calcSC(std::vector<float>& buffer){
-    float * exactHitArray = &buffer[0];
-    int size = buffer.size();
 
-    float centroid = 0;
-    
-    float samplerateDividedBySize = (44100.0f/(float)size);
-    
+    int bufferSize = buffer.size();
+    float sampleRate = 44100;
     float sumMags = 0;
     float sumFreqByMags = 0;
-
+    float centroid = 0;
+    float samplerateDividedBySize = (sampleRate/(float)bufferSize);
     float* samples = &buffer[0];
 
-    fftw_complex out[buffer.size()];
-    fftw_plan p = fftw_plan_dft_r2c_1d(buffer.size(),samples, out, FFTW_ESTIMATE);
-
-    fftw_execute(p);
-    fftw_destroy_plan(p);
+    fftwf_complex out[bufferSize];
+    fftwf_plan p = fftwf_plan_dft_r2c_1d(bufferSize,samples, out, FFTW_ESTIMATE);
+    fftwf_execute(p);
+    fftwf_destroy_plan(p);
     
-    for(int i = 0; i < size; i++){
+    for(int i = 0; i < bufferSize; i++){
         sumMags += out[i][0];
         sumFreqByMags += out[i][0]*i*samplerateDividedBySize;
     }
     
     centroid = sumFreqByMags/sumMags;
 
-    return centroid/22050.0f;
+    //TBD: Check whether we need to divide it by the Nyqist.
+    return centroid/sampleRate/2f;
+
 }
 
+//---------------------------------------------------------------
 std::vector<float> gilbertAnalysis::getExactHit(std::vector<float> &hitBuffer, float threshold){
-    std::vector<float> exactHit(8192);
-    float* rmsInEachBin = new float[822];
+
+    //Every how many samples should the RMS be calculated.
+    int resolution = 100;
+    //Initialisation of the hightest RMS bin.
     int highestRMSBin = 0;
+    //A new vector that will contain the exact hit.
+    std::vector<float> exactHit(8192);
+    //An array of floats, which each representing the RMS of 100 samples.
+    float* rmsInEachBin = new float[hitBuffer.size()/resolution];
+    //Setting the threshold.
     float highestRMSValue = threshold;
-    for(int i = 0; i<hitBuffer.size()-100; i+=100){
-        
-        //calculate its rms and store it as an array element.
+
+    for(int i = 0; i<hitBuffer.size()-resolution; i+=resolution){
+
+        //create small arrays, each of length 100 samples.
         std::vector<float>::const_iterator first = hitBuffer.begin() + i;
-        std::vector<float>::const_iterator last = hitBuffer.begin() + i + 100;
+        std::vector<float>::const_iterator last = hitBuffer.begin() + i + resolution;
         std::vector<float> hitBufferBin(first, last);
-        rmsInEachBin[i/100] = calcRMS(hitBufferBin);
+
+        //setting the RMS in a bin.
+        rmsInEachBin[i/resolution] = calcRMS(hitBufferBin);
         
-        if(rmsInEachBin[i/100]>highestRMSValue){
-            highestRMSValue = rmsInEachBin[i/100];
+        //Checking whether the RMS is greater then the average RMS - if so, detect an onset.
+        //Only the highest RMS value is kept, therefore, only the loudest hit is kept.
+        if(rmsInEachBin[i/resolution]>highestRMSValue){
+            highestRMSValue = rmsInEachBin[i/resolution];
             highestRMSBin = i;
         }
+
     }
     
     for(int j = 0 ; j < exactHit.size(); j++) {
+        //populates a new vector with the values of the exact hit.
+        //This would crash with an array out of bounds if the hit was done at the end of the two seconds.
         exactHit[j]=hitBuffer[j+highestRMSBin];
     }
+    //returns ~200 milliseconds of the exact hit.
     return exactHit;
 }
 
 //---------------------------------------------------------------
-sfs gilbertAnalysis::analyseHitBuffer(std::vector<float> &hitBuffer, std::string drum){
-    //array to store rms in each bin
+sfs gilbertAnalysis::analyseHitBuffer(std::vector<float> &exactHitBuffer, std::string drum){
 
+    int numWindows = 64;
+    int windowSize = 128;
+    //A vector of spectral centroid values
     std::vector<float> centroidEnvelope;
+    //A vector of RMS values
     std::vector<float> rmsEnvelope;
 
-    for(int i = 0; i < 64; i+=128){
-        centroidEnvelope.push_back(calcSC(hitBuffer));
-        rmsEnvelope.push_back(calcRMS(hitBuffer));
+    //Calculating the spectral centroid and RMS for each window.
+    for(int i = 0; i < numWindows; i+=windowSize){
+        centroidEnvelope.push_back(calcSC(exactHitBuffer[i]));
+        rmsEnvelope.push_back(calcRMS(exactHitBuffer[i]));
     }
 
+    //Creating a new sound feature set object.
     sfs hitInfo = {.id=drum, .centroid=centroidEnvelope, .rms=rmsEnvelope};
     
     return hitInfo;

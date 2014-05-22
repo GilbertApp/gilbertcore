@@ -3,25 +3,22 @@
 #include "gilanalysis.h"
 #include "gilclassifier.h"
 #include "sndfile.h"
+#include "sndfile.hh"
 
 int main( int argc, const char* argv[] ){
-    char *infilename;
-    SNDFILE *infile = NULL;
-    SF_INFO sfinfo;
 
-    infile = sf_open("test.wav",SFM_READ,&sfinfo);
+    SndfileHandle file ;
+    float buffer[88200];
+    int bufferSize = sizeof(buffer)/sizeof(*buffer);
 
-    float samples[83060];
+    file = SndfileHandle("test.wav") ;
+    file.read(buffer, bufferSize) ;
+    // std::vector<float> sampleVec(buffer, buffer + sizeof(buffer)/sizeof(*buffer));
 
-    sf_read_float(infile, samples, 1);
-
-    std::vector<float> sampleVec(samples, samples + sizeof samples / sizeof samples[0]);
-
-    gilbertAnalysis *gana = new gilbertAnalysis();
-
-    std::vector<float> thing = gana->getExactHit(sampleVec,0.4);
-
-    gana->analyseHitBuffer(thing,"yay");
-
-    printf("this worked");
+    fftwf_complex out[bufferSize];
+    fftwf_plan p = fftwf_plan_dft_r2c_1d(bufferSize,buffer, out, FFTW_ESTIMATE);
+    fftwf_execute(p);
+    fftwf_destroy_plan(p);
+    std::cout << "Calculated FFT" <<std::endl;
+    
 }

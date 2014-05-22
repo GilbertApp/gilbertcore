@@ -22,20 +22,18 @@ float gilbertAnalysis::calcSC(std::vector<float>& buffer){
     
     float sumMags = 0;
     float sumFreqByMags = 0;
-    
-    float * magnitude = new float[size];
-    memset(magnitude, 0, size * sizeof(float));
-    float * power = new float[size];
-    memset(power, 0, size * sizeof(float));
-    float * phase = new float[size];
-    memset(phase, 0, size * sizeof(float));
-    float avg_power;
-    
-    gilfft.powerSpectrum(0, size/2, exactHitArray, size, magnitude, phase, power, &avg_power);
+
+    float* samples = &buffer[0];
+
+    fftw_complex out[buffer.size()];
+    fftw_plan p = fftw_plan_dft_r2c_1d(buffer.size(),samples, out, FFTW_ESTIMATE);
+
+    fftw_execute(p);
+    fftw_destroy_plan(p);
     
     for(int i = 0; i < size; i++){
-        sumMags += magnitude[i];
-        sumFreqByMags += magnitude[i]*i*samplerateDividedBySize;
+        sumMags += out[i][0];
+        sumFreqByMags += out[i][0]*i*samplerateDividedBySize;
     }
     
     centroid = sumFreqByMags/sumMags;
@@ -43,7 +41,7 @@ float gilbertAnalysis::calcSC(std::vector<float>& buffer){
     return centroid/22050.0f;
 }
 
-std::vector<float> gilbertAnalysis::getExactHit(std::vector<float>&hitBuffer, float threshold){
+std::vector<float> gilbertAnalysis::getExactHit(std::vector<float> &hitBuffer, float threshold){
     std::vector<float> exactHit(8192);
     float* rmsInEachBin = new float[822];
     int highestRMSBin = 0;
@@ -69,7 +67,7 @@ std::vector<float> gilbertAnalysis::getExactHit(std::vector<float>&hitBuffer, fl
 }
 
 //---------------------------------------------------------------
-sfs gilbertAnalysis::analyseHitBuffer(std::vector<float>& hitBuffer, std::string drum){
+sfs gilbertAnalysis::analyseHitBuffer(std::vector<float> &hitBuffer, std::string drum){
     //array to store rms in each bin
 
     std::vector<float> centroidEnvelope;

@@ -1,7 +1,7 @@
 all: gilbert
 
 gilbert:
-	g++ -lfftw3 -o gilbert gilbert.cpp
+	g++ -lfftw3f -o gilbert gilbert.cpp
 
 clean:
 	rm -rf *o gilbert

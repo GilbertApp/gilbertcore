@@ -25,7 +25,8 @@ double gilbertanalysis::calcSC(std::vector<double>& buffer){
     double* samples = &buffer[0];
 
     //what should the size of the FFT be?
-    fftw_complex out[1024];
+    //In any case (for 128 samples long signal) it returns 64 bins.. some of them negative :/.
+    fftw_complex out[2048];
     fftw_plan p = fftw_plan_dft_r2c_1d(bufferSize,samples, out, FFTW_ESTIMATE);
     fftw_execute(p);
     fftw_destroy_plan(p);
@@ -57,7 +58,7 @@ std::vector<double> gilbertanalysis::getExactHit(std::vector<double> &hitBuffer,
     //Setting the threshold.
     double highestRMSValue = threshold;
 
-    for(int i = 0; i<(hitBuffer.size()-resolution); i+=resolution){
+    for(int i = 0; i<hitBuffer.size(); i+=resolution){
         //create small vectors, each of length 100 samples.
         std::vector<double> hitBufferBin(&hitBuffer[i],&hitBuffer[i+resolution]);
 
@@ -68,9 +69,9 @@ std::vector<double> gilbertanalysis::getExactHit(std::vector<double> &hitBuffer,
     //Checking whether the RMS is greater then the average RMS - if so, detect an onset.
     //Only the highest RMS value is kept, therefore, only the loudest hit is kept.
     for (int i = 0; i < rmsInEachBin.size(); i++){
-        std::cout<<rmsInEachBin.at(i)<<std::endl;
+        // std::cout<<rmsInEachBin.at(i)<<std::endl;
         if(rmsInEachBin.at(i)>highestRMSValue){
-            std::cout << i<<std::endl;
+            // std::cout << i<<std::endl;
             highestRMSValue = rmsInEachBin.at(i);
             highestRMSBin = i*resolution;
         }
@@ -98,12 +99,7 @@ sfs gilbertanalysis::analyseHitBuffer(std::vector<double> &exactHitBuffer, std::
 
     //Calculating the spectral centroid and RMS for each window.
     for(int i = 0; i < exactHitBuffer.size(); i+=windowSize){
-
-        std::vector<double>::const_iterator first = exactHitBuffer.begin() + i;
-        std::vector<double>::const_iterator last = exactHitBuffer.begin() + i + windowSize;
-        std::vector<double> window(first, last);
-        // std::cout<<calcSC(window)<<std::endl;
-
+        std::vector<double> window(&exactHitBuffer[i],&exactHitBuffer[i+windowSize]);
         centroidEnvelope.push_back(calcSC(window));
         rmsEnvelope.push_back(calcRMS(window));
     }

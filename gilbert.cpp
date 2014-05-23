@@ -23,6 +23,9 @@ int main( int argc, const char* argv[] ){
     gilbertanalysis* gilan = new gilbertanalysis();
     std::vector<double> exact(gilan->getExactHit(sampleVec, 0.00000001));
     sfs info = gilan->analyseHitBuffer(exact, "nvnv");
-    gilan->writeWAV(exact,exact.size(),info.id,info);
+    for (int i = 0; i < info.centroid.size(); ++i){
+        std::cout << info.centroid.at(i) << std::endl;
+    }
+    // gilan->writeWAV(exact,exact.size(),info.id,info);
 
 }

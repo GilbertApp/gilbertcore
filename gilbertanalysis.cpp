@@ -53,7 +53,6 @@ std::vector<double> gilbertanalysis::getExactHit(std::vector<double> &hitBuffer,
     //A new vector that will contain the exact hit.
     std::vector<double> exactHit(8192);
     //An array of doubles, which each representing the RMS of 100 samples.
-
     std::vector<double> rmsInEachBin;
     //Setting the threshold.
     double highestRMSValue = threshold;
@@ -71,7 +70,7 @@ std::vector<double> gilbertanalysis::getExactHit(std::vector<double> &hitBuffer,
     for (int i = 0; i < rmsInEachBin.size(); i++){
         std::cout<<rmsInEachBin.at(i)<<std::endl;
         if(rmsInEachBin.at(i)>highestRMSValue){
-            std::cout<<i*resolution<<std::endl;
+            std::cout << i<<std::endl;
             highestRMSValue = rmsInEachBin.at(i);
             highestRMSBin = i*resolution;
         }
@@ -106,7 +105,7 @@ sfs gilbertanalysis::analyseHitBuffer(std::vector<double> &exactHitBuffer, std::
         // std::cout<<calcSC(window)<<std::endl;
 
         centroidEnvelope.push_back(calcSC(window));
-        // rmsEnvelope.push_back(calcRMS(window));
+        rmsEnvelope.push_back(calcRMS(window));
     }
 
     //Creating a new sound feature set object.
@@ -116,7 +115,7 @@ sfs gilbertanalysis::analyseHitBuffer(std::vector<double> &exactHitBuffer, std::
 }
 
 //--------------------------------------------------------------
-void gilbertanalysis::writeWAV(std::vector<float>& buffer, int bufferSize, std::string drum, sfs info){
+void gilbertanalysis::writeWAV(std::vector<double>& buffer, int bufferSize, std::string drum, sfs info){
     float* exactHitArray;
     exactHitArray = new float[buffer.size()];
     for(int j = 0; j<buffer.size(); j++){
@@ -128,7 +127,7 @@ void gilbertanalysis::writeWAV(std::vector<float>& buffer, int bufferSize, std::
     sfinfo.samplerate = 44100;
     sfinfo.format = SF_FORMAT_WAV | SF_FORMAT_PCM_16;
     
-    std::string path = "../../../";
+    std::string path = "";
     path+=drum;
     path+=".wav";
     std::cout << path.c_str() << std::endl;

@@ -13,5 +13,5 @@ public:
     double calcSC(std::vector<double>& buffer);
     std::vector<double> getExactHit(std::vector<double>&hitBuffer, double threshold);
     sfs analyseHitBuffer(std::vector<double>& exactHitBuffer, std::string drum);
-    void writeWAV(std::vector<float>& buffer, int bufferSize, std::string drum, sfs info);   
+    void writeWAV(std::vector<double>& buffer, int bufferSize, std::string drum, sfs info);   
 };

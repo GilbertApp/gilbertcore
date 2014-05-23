@@ -4,19 +4,25 @@
 #include <sndfile.hh>
 #include "gilbertanalysis.h"
 #include "gilbertclassifier.h"
+// #include "soundfeatureset.c"
 
 int main( int argc, const char* argv[] ){
 
     SndfileHandle file;
-    double buffer[186369];
+
+    //BUFFER SIZE HAS TO BE AN EVEN NUMBER!!!!!
+    double buffer[160400];
     int bufferSize = sizeof(buffer)/sizeof(*buffer);
     const char * fname = "test2.wav";
 
     file = SndfileHandle(fname);
     file.read(buffer, bufferSize);
+
     std::vector<double> sampleVec(buffer, buffer + sizeof(buffer)/sizeof(*buffer));
+
     gilbertanalysis* gilan = new gilbertanalysis();
-    // std::vector<double> exact(gilan->getExactHit(sampleVec,0.00000001));
-    // std::cout<<exact.size()<<std::endl;
+    std::vector<double> exact(gilan->getExactHit(sampleVec, 0.00000001));
+    sfs info = gilan->analyseHitBuffer(exact, "nvnv");
+    gilan->writeWAV(exact,exact.size(),info.id,info);
 
 }

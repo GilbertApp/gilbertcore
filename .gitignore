@@ -1,9 +1,4 @@
 .DS_Store
-test.wav
-test2.wav
-test3.wav
-test4.wav
-nvnv.wav
-gilbert.o
-gilbertanalysis.o
+*.wav
+*.o
 gilbert

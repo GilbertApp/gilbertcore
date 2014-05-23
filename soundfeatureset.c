@@ -1,5 +1,5 @@
 typedef struct soundFeatureSet{
     std::string id;
-    std::vector<float> centroid;
-    std::vector<float> rms;
+    std::vector<double> centroid;
+    std::vector<double> rms;
 } sfs;

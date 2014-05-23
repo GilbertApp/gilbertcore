@@ -1,7 +1,9 @@
 all: gilbert
 
 gilbert:
-	g++ -lsndfile -lfftw3f -o gilbert gilbert.cpp
+	g++ -c gilbertanalysis.cpp
+	g++ -c gilbert.cpp
+	g++ -lsndfile -lfftw3 -o gilbert gilbertanalysis.o gilbert.o
 
 clean:
 	rm -rf *o gilbert

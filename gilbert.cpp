@@ -23,9 +23,11 @@ int main( int argc, const char* argv[] ){
     gilbertanalysis* gilan = new gilbertanalysis();
     std::vector<double> exact(gilan->getExactHit(sampleVec, 0.00000001));
     sfs info = gilan->analyseHitBuffer(exact, "nvnv");
-    for (int i = 0; i < info.centroid.size(); ++i){
-        std::cout << info.centroid.at(i) << std::endl;
-    }
+    
+    std::cout << "Mean: " << gilan->calcMean(info.centroid) << std::endl;
+    std::cout << "Standard Deviation: " << gilan->calcStanDev(info.centroid) << std::endl;
+    std::cout << "Min: " << gilan->getMin(info.centroid) << std::endl;
+    std::cout << "Max: " << gilan->getMax(info.centroid) << std::endl;
     // gilan->writeWAV(exact,exact.size(),info.id,info);
 
 }

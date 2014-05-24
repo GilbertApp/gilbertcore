@@ -32,15 +32,15 @@ double gilbertanalysis::calcSC(std::vector<double>& buffer){
     fftw_destroy_plan(p);
     
     for(int i = 0; i < bufferSize; i++){
-        // std::cout << out[i][0] << std::endl;
-        sumMags += out[i][0];
-        sumFreqByMags += out[i][0]*i*samplerateDividedBySize;
+        float mag = sqrt(pow(out[i][0],2) + pow(out[i][1],2));
+        sumMags += mag;
+        sumFreqByMags += mag*i*samplerateDividedBySize;
     }
     // std::cout<<sumFreqByMags<<std::endl;
     centroid = sumFreqByMags/sumMags;
 
     //TBD: Check whether we need to divide it by the Nyqist.
-    return centroid/sampleRate/2;
+    return centroid;
 
 }
 
@@ -109,6 +109,55 @@ sfs gilbertanalysis::analyseHitBuffer(std::vector<double> &exactHitBuffer, std::
     
     return hitInfo;
 }
+
+
+/****************************FEATURE EXTRACTORS****************************/
+
+//---------------------------------------------------------------
+double gilbertanalysis::calcMean(std::vector<double> v){
+    double mean = 0,
+            sum = 0;
+    int vectorSize = v.size();
+
+    for (int i = 0; i < vectorSize; i++){
+        sum += v.at(i);
+    }
+    mean = sum/vectorSize;
+
+    return mean;
+}
+
+//---------------------------------------------------------------
+double gilbertanalysis::calcStanDev(std::vector<double> v){
+    double mean = calcMean(v);
+    double sqDiffSum = 0;
+    int vectorSize = v.size();
+
+    for (int i = 0; i < vectorSize; i++){
+        double sqDiff = v.at(i) - mean;
+        sqDiff = pow(sqDiff,2);
+        sqDiffSum += sqDiff;
+    }
+
+    double variance = sqDiffSum/vectorSize;
+    double sd = sqrt(variance);
+    return sd;
+}
+
+//---------------------------------------------------------------
+double gilbertanalysis::getMin(std::vector<double> v){
+    double min = *std::min_element(v.begin(), v.end());
+    return min;
+}
+
+//---------------------------------------------------------------
+double gilbertanalysis::getMax(std::vector<double> v){
+    double max = *std::max_element(v.begin(), v.end());
+    return max;
+}
+
+/******************************************************************************/
+
 
 //--------------------------------------------------------------
 void gilbertanalysis::writeWAV(std::vector<double>& buffer, int bufferSize, std::string drum, sfs info){

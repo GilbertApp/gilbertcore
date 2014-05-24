@@ -16,6 +16,9 @@ double gilbertanalysis::calcRMS(std::vector<double>& buffer){
 //--------------------------------------------------------------
 double gilbertanalysis::calcSC(std::vector<double>& buffer){
 
+    //TODO: Normalize centroid. Dividing by nyquist is not good as most of the centroid values will be < 5000,
+    //so we'll lose half of the range.
+
     int bufferSize = buffer.size();
     float sampleRate = 44100;
     double sumMags = 0;
@@ -39,7 +42,6 @@ double gilbertanalysis::calcSC(std::vector<double>& buffer){
     // std::cout<<sumFreqByMags<<std::endl;
     centroid = sumFreqByMags/sumMags;
 
-    //TBD: Check whether we need to divide it by the Nyqist.
     return centroid;
 
 }

@@ -54,7 +54,8 @@ std::vector<double> gilbertanalysis::getExactHit(std::vector<double> &hitBuffer,
     //Initialisation of the hightest RMS bin.
     int highestRMSBin = 0;
     //A new vector that will contain the exact hit.
-    std::vector<double> exactHit(8192);
+    int exactHitLength = 4096;
+    std::vector<double> exactHit(exactHitLength);
     //An array of doubles, which each representing the RMS of 100 samples.
     std::vector<double> rmsInEachBin;
     //Setting the threshold.
@@ -92,7 +93,6 @@ std::vector<double> gilbertanalysis::getExactHit(std::vector<double> &hitBuffer,
 //---------------------------------------------------------------
 sfs gilbertanalysis::analyseHitBuffer(std::vector<double> &exactHitBuffer, std::string drum){
 
-    int numWindows = 64;
     int windowSize = 128;
     //A vector of spectral centroid values
     std::vector<double> centroidEnvelope;
@@ -106,8 +106,13 @@ sfs gilbertanalysis::analyseHitBuffer(std::vector<double> &exactHitBuffer, std::
         rmsEnvelope.push_back(calcRMS(window));
     }
 
+
+
     //Creating a new sound feature set object.
-    sfs hitInfo = {.id=drum, .centroid=centroidEnvelope, .rms=rmsEnvelope};
+    sfs hitInfo = {.id = drum, 
+                   .sc_mean = calcMean(centroidEnvelope), .sc_stanDev = calcStanDev(centroidEnvelope), .sc_min = getMin(centroidEnvelope), .sc_max = getMax(centroidEnvelope),
+                   .rms_mean = calcMean(rmsEnvelope), .rms_stanDev = calcStanDev(rmsEnvelope), .rms_min = getMin(rmsEnvelope), .rms_max = getMax(rmsEnvelope)
+                };
     
     return hitInfo;
 }
@@ -115,15 +120,17 @@ sfs gilbertanalysis::analyseHitBuffer(std::vector<double> &exactHitBuffer, std::
 
 /****************************FEATURE EXTRACTORS****************************/
 
-std::vector<double> gilbertanalysis::extractFeatures(std::vector<double> v){
-    std::vector<double> features;
-    features.push_back(calcMean(v));
-    features.push_back(calcStanDev(v));
-    features.push_back(getMin(v));
-    features.push_back(getMax(v));
+//A function that groups all of the features into a vector, might be useful later on.
 
-    return features;
-}
+// std::vector<double> gilbertanalysis::extractFeatures(std::vector<double> v){
+//     std::vector<double> features;
+//     features.push_back(calcMean(v));
+//     features.push_back(calcStanDev(v));
+//     features.push_back(getMin(v));
+//     features.push_back(getMax(v));
+
+//     return features;
+// }
 
 //---------------------------------------------------------------
 double gilbertanalysis::calcMean(std::vector<double> v){

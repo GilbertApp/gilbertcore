@@ -115,6 +115,16 @@ sfs gilbertanalysis::analyseHitBuffer(std::vector<double> &exactHitBuffer, std::
 
 /****************************FEATURE EXTRACTORS****************************/
 
+std::vector<double> gilbertanalysis::extractFeatures(std::vector<double> v){
+    std::vector<double> features;
+    features.push_back(calcMean(v));
+    features.push_back(calcStanDev(v));
+    features.push_back(getMin(v));
+    features.push_back(getMax(v));
+
+    return features;
+}
+
 //---------------------------------------------------------------
 double gilbertanalysis::calcMean(std::vector<double> v){
     double mean = 0,

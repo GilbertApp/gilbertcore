@@ -18,5 +18,6 @@ public:
     double calcStanDev(std::vector<double> v);
     double getMin(std::vector<double> v);
     double getMax(std::vector<double> v);
+    std::vector<double> extractFeatures(std::vector<double> v);
     void writeWAV(std::vector<double>& buffer, int bufferSize, std::string drum, sfs info);   
 };

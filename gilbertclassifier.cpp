@@ -1,6 +1,8 @@
-#include "gilbertglassifier.h"
+#include "gilbertclassifier.h"
 
 std::string gilbertclassifier::lookupClosest(sfs input){
+
+    
 //    std::cout << input.id + ", " + ofToString(input.centroid) + ", " + ofToString(input.rms) << std::endl;
     sfs closest;
     // float dist = 0;

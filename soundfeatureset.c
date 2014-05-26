@@ -1,4 +1,7 @@
-typedef struct soundFeatureSet{
+#include <iostream>
+#include <stdio.h>
+
+typedef struct soundfeatureset{
     std::string id;
     double sc_mean;
     double sc_stanDev;

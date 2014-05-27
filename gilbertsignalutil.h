@@ -6,6 +6,7 @@
 #include <vector>
 #include <math.h>
 #include <algorithm>
+#include <sndfile.h>
 
 class gilbertsignalutil{
 public:

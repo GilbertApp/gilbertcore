@@ -1,0 +1,5 @@
+/**
+\mainpage Gilbert Core
+
+This is the core of the Gilbert personal drumming solution app. It contains no platform specific code as it is intended to be 'wrapped' by an app for each target platform. It provides an API for a machine learning system targetted specifically at short, percussive sounds.
+*/

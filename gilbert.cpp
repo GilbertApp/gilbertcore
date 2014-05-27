@@ -18,10 +18,10 @@ int main( int argc, const char* argv[] ){
 
     int bufferSize = sizeof(buffer)/sizeof(*buffer);
 
-    const char * fname = "test2.wav";
-    const char * fname2 = "test3.wav";
-    const char * fname3 = "test4.wav";
-    const char * fname4 = "realtime1.wav";
+    const char * fname = "./audio/test2.wav";
+    const char * fname2 = "./audio/test3.wav";
+    const char * fname3 = "./audio/test4.wav";
+    const char * fname4 = "./audio/realtime1.wav";
 
     file = SndfileHandle(fname);
     file.read(buffer, bufferSize);

@@ -3,15 +3,15 @@
 
 std::string gilbertclassifier::lookupClosest(sfs realTimeHit){
     int k = 5;
-    int[] indices = new int[k];
-    boolean swapped = false;
+    int indices[k];
+    bool swapped = false;
     std::vector<sfs> db = gilbertdb::getFeatures();
     for (int i = 0; i < db.size(); i++){
         double d = calcDistance(db.at(i), realTimeHit);
-        for (int j = 0; j < indices.length; j++){
+        for (int j = 0; j < k; j++){
             if(d < indices[j]){
-                for (int k = indices.length-1; k > j; k--){
-                    indices[k] == indices[k-1];
+                for (int m = k-1; m > j; m--){
+                    indices[m] = indices[m-1];
                 }
                 indices[j] = d;
                 break;

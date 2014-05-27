@@ -4,7 +4,6 @@
 #include <sndfile.hh>
 #include "gilbertanalysis.h"
 #include "gilbertsignalutil.h"
-// #include "gilbertclassifier.h"
 
 int main( int argc, const char* argv[] ){
 

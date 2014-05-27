@@ -7,6 +7,10 @@
 #include <math.h>
 #include <algorithm>
 #include <sndfile.h>
+#include "soundfeatureset.c"
+#include "gilbertanalysis.h"
+#ifndef GILBERTSIGNALUTIL_H
+#define GILBERTSIGNALUTIL_H
 
 class gilbertsignalutil{
 public:
@@ -21,3 +25,5 @@ public:
     //! @param info a sound feature set representing the sound
     static void writeWAV(std::vector<double>& buffer, std::string drum, sfs info);
 };
+
+#endif

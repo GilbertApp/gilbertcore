@@ -9,6 +9,8 @@
 #include <math.h>
 #include <algorithm>
 #include "soundfeatureset.c"
+#ifndef GILBERTDB_H
+#define GILBERTDB_H
 
 class gilbertdb {
 public:
@@ -40,3 +42,5 @@ public:
     //! @see soundfeatureset
     static void removeFeature(std::string _id);
 };
+
+#endif

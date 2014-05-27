@@ -7,6 +7,8 @@
 #include <math.h>
 #include <algorithm> 
 #include "gilbertdb.h"
+#ifndef GILBERTCLASSIFIER_H
+#define GILBERTCLASSIFIER_H
 
 class gilbertclassifier {
     //! calculates the euclidean distance between two sound feature sets
@@ -23,3 +25,5 @@ public:
     //! @see soundfeatureset
     std::string lookupClosest(sfs realTimeHit);
 };
+
+#endif

@@ -13,6 +13,8 @@
 #include <sndfile.h>
 #include <sndfile.hh>
 #include "gilbertclassifier.h"
+#ifndef GILBERTANALYSIS_H
+#define GILBERTANALYSIS_H
 
 class gilbertanalysis {
 public:
@@ -89,3 +91,5 @@ public:
     //! @param info a sound feature set representing the sound
     static void writeWAV(std::vector<double>& buffer, std::string drum, sfs info);   
 };
+
+#endif

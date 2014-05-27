@@ -5,6 +5,8 @@
 
 #include <iostream>
 #include <stdio.h>
+#ifndef SOUNDFEATURESET_C
+#define SOUNDFEATURESET_C
 
 typedef struct soundfeatureset{
     //! A unique identifier for the soundfeatureset instance
@@ -26,3 +28,5 @@ typedef struct soundfeatureset{
     //! The maximum value of the RMS buffer
     double rms_max;
 } sfs;
+
+#endif

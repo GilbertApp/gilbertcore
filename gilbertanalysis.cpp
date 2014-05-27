@@ -44,25 +44,13 @@ double gilbertanalysis::calcSC(std::vector<double>& buffer){
 
 //---------------------------------------------------------------
 sfs gilbertanalysis::analyseHitBuffer(std::vector<double> &exactHitBuffer, std::string drum){
+    sfs hitInfo = analyseHitBuffer(exactHitBuffer);
 
-    int windowSize = 128;
-    //A vector of spectral centroid values
-    std::vector<double> centroidEnvelope;
-    //A vector of RMS values
-    std::vector<double> rmsEnvelope;
-
-    //Calculating the spectral centroid and RMS for each window.
-    for(int i = 0; i < exactHitBuffer.size(); i+=windowSize){
-        std::vector<double> window(&exactHitBuffer[i],&exactHitBuffer[i+windowSize]);
-        centroidEnvelope.push_back(calcSC(window));
-        rmsEnvelope.push_back(calcRMS(window));
-    }
-
-    //Creating a new sound feature set object.
-    sfs hitInfo = createSFS(centroidEnvelope, rmsEnvelope, drum);
+    hitInfo.id = drum;
     
     return hitInfo;
 }
+
 //---------------------------------------------------------------
 sfs gilbertanalysis::analyseHitBuffer(std::vector<double> &exactHitBuffer){
 

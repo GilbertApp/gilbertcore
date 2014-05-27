@@ -154,18 +154,6 @@ sfs gilbertanalysis::createSFS(std::vector<double> centroids, std::vector<double
 
 /****************************FEATURE EXTRACTORS****************************/
 
-//A function that groups all of the features into a vector, might be useful later on.
-
-// std::vector<double> gilbertanalysis::extractFeatures(std::vector<double> v){
-//     std::vector<double> features;
-//     features.push_back(calcMean(v));
-//     features.push_back(calcStanDev(v));
-//     features.push_back(getMin(v));
-//     features.push_back(getMax(v));
-
-//     return features;
-// }
-
 //---------------------------------------------------------------
 double gilbertanalysis::calcMean(std::vector<double> v){
     double mean = 0,
@@ -213,7 +201,7 @@ double gilbertanalysis::getMax(std::vector<double> v){
 
 
 //--------------------------------------------------------------
-void gilbertanalysis::writeWAV(std::vector<double>& buffer, int bufferSize, std::string drum, sfs info){
+void gilbertanalysis::writeWAV(std::vector<double>& buffer, std::string drum, sfs info){
     float* exactHitArray;
     exactHitArray = new float[buffer.size()];
     for(int j = 0; j<buffer.size(); j++){
@@ -233,7 +221,7 @@ void gilbertanalysis::writeWAV(std::vector<double>& buffer, int bufferSize, std:
     SNDFILE * outfile = sf_open(path.c_str(), SFM_WRITE, &sfinfo);
     char strbuf[50];
     sf_set_string(outfile, SF_STR_COMMENT, strbuf);
-    sf_count_t count = sf_write_float(outfile, &exactHitArray[0], bufferSize);
+    sf_count_t count = sf_write_float(outfile, &exactHitArray[0], buffer.size());
     sf_write_sync(outfile);
     sf_close(outfile);
 }

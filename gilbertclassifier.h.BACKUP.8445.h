@@ -9,9 +9,15 @@
 #include "gilbertdb.h"
 
 class gilbertclassifier {
-	//! calculates the euclidean distance between two sound feature sets
 	static double calcDistance(sfs a, sfs b);
 public:
-	//! returns the classification of an input sound feature set
+<<<<<<< HEAD
     static void lookupClosest(sfs realTimeHit);
+    
+=======
+    //! returns the classification of an input sound feature set
+    std::string lookupClosest(sfs realTimeHit);
+    //! calculates the euclidean distance between two sound feature sets
+    double calcDistance(sfs a, sfs b);
+>>>>>>> 348685cedacb9de874ac23d7af53fa8b023056b0
 };

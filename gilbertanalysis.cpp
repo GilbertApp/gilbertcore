@@ -1,11 +1,7 @@
 #include "gilbertanalysis.h"
 
-// std::vector<sfs> feature_sets;
-
-
 //--------------------------------------------------------------
 double gilbertanalysis::calcRMS(std::vector<double>& buffer){
-
     double count = 0;
     for(int i=0; i<buffer.size(); i++){
         count += pow(buffer.at(i),2);
@@ -17,7 +13,6 @@ double gilbertanalysis::calcRMS(std::vector<double>& buffer){
 
 //--------------------------------------------------------------
 double gilbertanalysis::calcSC(std::vector<double>& buffer){
-
     //TODO: Normalize centroid. Dividing by nyquist is not good as most of the centroid values will be < 5000,
     //so we'll lose half of the range.
 
@@ -41,7 +36,6 @@ double gilbertanalysis::calcSC(std::vector<double>& buffer){
         sumMags += mag;
         sumFreqByMags += mag*i*samplerateDividedBySize;
     }
-    // std::cout<<sumFreqByMags<<std::endl;
     centroid = sumFreqByMags/sumMags;
 
     return centroid;
@@ -157,30 +151,6 @@ sfs gilbertanalysis::createSFS(std::vector<double> centroids, std::vector<double
     return hitInfo;
 
 }
-//---------------------------------------------------------------
-
-// sfs gilbertanalysis::analyseHitBuffer(std::vector<double> &exactHitBuffer){
-
-//     int windowSize = 128;
-//     //A vector of spectral centroid values
-//     std::vector<double> centroidEnvelope;
-//     //A vector of RMS values
-//     std::vector<double> rmsEnvelope;
-
-//     //Calculating the spectral centroid and RMS for each window.
-//     for(int i = 0; i < exactHitBuffer.size(); i+=windowSize){
-//         std::vector<double> window(&exactHitBuffer[i],&exactHitBuffer[i+windowSize]);
-//         centroidEnvelope.push_back(calcSC(window));
-//         rmsEnvelope.push_back(calcRMS(window));
-//     }
-
-//     std::vector<double> sc_features = extractFeatures(centroidEnvelope);
-//     std::vector<double> rms_features = extractFeatures(rmsEnvelope);
-
-//     sfs hitInfo = getClosestHit(sc_features, rms_features);
-    
-//     return hitInfo;
-// }
 
 /****************************FEATURE EXTRACTORS****************************/
 

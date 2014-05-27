@@ -49,14 +49,6 @@ int main( int argc, const char* argv[] ){
     gilbertdb::setFeature(gilan->analyseHitBuffer(exact3, "sound3"));
     gilbertclassifier::lookupClosest(gilan->analyseHitBuffer(exact4));
 
-    std::vector<sfs> features = gilbertdb::getFeatures();
-    for(int i = 0 ; i < features.size(); i++){
-        std::cout<<"***********************"<<std::endl;
-        std::cout<<features.at(i).id<<std::endl;
-        std::cout<<"SC: "<<features.at(i).sc_mean<<std::endl;
-        std::cout<<"RMS: "<<features.at(i).rms_mean<<std::endl;
-    }    
-
     // gilan->writeWAV(exact,exact.size(),info.id,info);
 
 }

@@ -26,9 +26,12 @@ public:
     sfs analyseHitBuffer(std::vector<double>& exactHitBuffer);
     //! Returns a Sound Feature Set struct representative of the signal input with an ID
     sfs analyseHitBuffer(std::vector<double>& exactHitBuffer, std::string drum);
-    //! Returns a Sound Feature Set struct based on sets of centroid and rms values
-    sfs createSFS(std::vector<double> centroids, std::vector<double> rmss, std::string drum);
+<<<<<<< HEAD
     sfs createSFS(std::vector<double> centroids, std::vector<double> rmss);
+=======
+    //! Returns a Sound Feature Set struct based on sets of centroid and rms values
+>>>>>>> 348685cedacb9de874ac23d7af53fa8b023056b0
+    sfs createSFS(std::vector<double> centroids, std::vector<double> rmss, std::string drum);
     //! Calculates the mean value of a vector
     double calcMean(std::vector<double> v);
     //! Calculates the standard deviation of a vector

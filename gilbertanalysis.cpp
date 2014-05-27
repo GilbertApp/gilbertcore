@@ -1,5 +1,7 @@
 #include "gilbertanalysis.h"
 
+// std::vector<sfs> feature_sets;
+
 
 //--------------------------------------------------------------
 double gilbertanalysis::calcRMS(std::vector<double>& buffer){
@@ -54,7 +56,8 @@ std::vector<double> gilbertanalysis::getExactHit(std::vector<double> &hitBuffer,
     //Initialisation of the hightest RMS bin.
     int highestRMSBin = 0;
     //A new vector that will contain the exact hit.
-    std::vector<double> exactHit(8192);
+    int exactHitLength = 4096;
+    std::vector<double> exactHit(exactHitLength);
     //An array of doubles, which each representing the RMS of 100 samples.
     std::vector<double> rmsInEachBin;
     //Setting the threshold.
@@ -92,7 +95,6 @@ std::vector<double> gilbertanalysis::getExactHit(std::vector<double> &hitBuffer,
 //---------------------------------------------------------------
 sfs gilbertanalysis::analyseHitBuffer(std::vector<double> &exactHitBuffer, std::string drum){
 
-    int numWindows = 64;
     int windowSize = 128;
     //A vector of spectral centroid values
     std::vector<double> centroidEnvelope;
@@ -107,13 +109,60 @@ sfs gilbertanalysis::analyseHitBuffer(std::vector<double> &exactHitBuffer, std::
     }
 
     //Creating a new sound feature set object.
-    sfs hitInfo = {.id=drum, .centroid=centroidEnvelope, .rms=rmsEnvelope};
+    sfs hitInfo = createSFS(centroidEnvelope, rmsEnvelope, drum);
     
     return hitInfo;
 }
 
+sfs gilbertanalysis::createSFS(std::vector<double> centroids, std::vector<double> rmss, std::string drum){
+
+    sfs hitInfo = {.id = drum, 
+                   .sc_mean = calcMean(centroids), .sc_stanDev = calcStanDev(centroids), .sc_min = getMin(centroids), .sc_max = getMax(centroids),
+                   .rms_mean = calcMean(rmss), .rms_stanDev = calcStanDev(rmss), .rms_min = getMin(rmss), .rms_max = getMax(rmss)
+                };
+
+    return hitInfo;
+
+}
+
+//---------------------------------------------------------------
+
+// sfs gilbertanalysis::analyseHitBuffer(std::vector<double> &exactHitBuffer){
+
+//     int windowSize = 128;
+//     //A vector of spectral centroid values
+//     std::vector<double> centroidEnvelope;
+//     //A vector of RMS values
+//     std::vector<double> rmsEnvelope;
+
+//     //Calculating the spectral centroid and RMS for each window.
+//     for(int i = 0; i < exactHitBuffer.size(); i+=windowSize){
+//         std::vector<double> window(&exactHitBuffer[i],&exactHitBuffer[i+windowSize]);
+//         centroidEnvelope.push_back(calcSC(window));
+//         rmsEnvelope.push_back(calcRMS(window));
+//     }
+
+//     std::vector<double> sc_features = extractFeatures(centroidEnvelope);
+//     std::vector<double> rms_features = extractFeatures(rmsEnvelope);
+
+//     sfs hitInfo = getClosestHit(sc_features, rms_features);
+    
+//     return hitInfo;
+// }
 
 /****************************FEATURE EXTRACTORS****************************/
+
+//A function that groups all of the features into a vector, might be useful later on.
+
+// std::vector<double> gilbertanalysis::extractFeatures(std::vector<double> v){
+//     std::vector<double> features;
+//     features.push_back(calcMean(v));
+//     features.push_back(calcStanDev(v));
+//     features.push_back(getMin(v));
+//     features.push_back(getMax(v));
+
+//     return features;
+// }
 
 //---------------------------------------------------------------
 double gilbertanalysis::calcMean(std::vector<double> v){

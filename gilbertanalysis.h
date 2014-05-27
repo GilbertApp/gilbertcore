@@ -39,7 +39,7 @@ public:
     sfs analyseHitBuffer(std::vector<double>& exactHitBuffer);
     //! Returns a Sound Feature Set struct representative of the signal input with an ID
     //! @param exactHitBuffer a buffer containing the precise, trimmed hit
-    //! @param drum the id of the sound
+    //! @param id the id of the sound
     //! @return a sound feature set representing the buffer
     //! @see analyseHitBuffer
     //! @see createSFS

@@ -12,12 +12,31 @@
 
 class gilbertdb {
 public:
-    //! adds a feature to the database
+    //! Adds a feature to the database
+    //! @param feature An input sound feature set
+    //! @see lookupClosest()
+    //! @see soundfeatureset
     static void setFeature(sfs feature);
     //! retrieves a specific feature as requested by id string
+    //! @param _id A string identifying a specific class
+    //! @return A sound feature set of class feature
+    //! @see getFeature()
+    //! @see removeFeature()
+    //! @see getFeatures()
+    //! @see soundfeatureset
     static sfs *getFeature(std::string _id);
-    //! retrieves all of the features in the database
+    //! retrieves a vector of all of the features in the database
+    //! @return A vector of all of the features in the database
+    //! @see setFeature()
+    //! @see removeFeature()
+    //! @see getFeature()
+    //! @see soundfeatureset
     static std::vector<sfs> getFeatures();
     //! removes a specific feature from the database by id
+    //! @param _id A string identifying a specific class
+    //! @see setFeature()
+    //! @see getFeature()
+    //! @see getFeatures()
+    //! @see soundfeatureset
     static void removeFeature(std::string _id);
 };

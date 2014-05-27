@@ -5,7 +5,8 @@
 #include "gilbertdb.h"
 
 class gilbertclassifier {
+	static double calcDistance(sfs a, sfs b);
 public:
-    std::string lookupClosest(sfs realTimeHit);
-    double calcDistance(sfs a, sfs b);
+    static void lookupClosest(sfs realTimeHit);
+    
 };

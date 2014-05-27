@@ -10,7 +10,7 @@ gilbert:
 	g++ -lsndfile -lfftw3 -o gilbert gilbertanalysis.o gilbert.o gilbertdb.o soundfeatureset.o gilbertclassifier.o gilbertsignalutil.o
 
 clean:
-	rm -rf *o gilbert
+	rm -rf *.o gilbert
 
 install:
 	make
@@ -19,5 +19,5 @@ install:
 uninstall:
 	rm /usr/local/bin/gilbert
 
-documentation:
+docs:
 	doxygen Doxyfile

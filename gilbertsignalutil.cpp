@@ -20,7 +20,7 @@ std::vector<double> gilbertsignalutil::getExactHit(std::vector<double> &hitBuffe
         std::vector<double> hitBufferBin(&hitBuffer[i],&hitBuffer[i+resolution]);
 
         //Storing RMS of every 100 samples in a vector.
-        rmsInEachBin.push_back(calcRMS(hitBufferBin));
+        rmsInEachBin.push_back(gilbertanalysis::calcRMS(hitBufferBin));
     }
 
     //Checking whether the RMS is greater then the average RMS - if so, detect an onset.

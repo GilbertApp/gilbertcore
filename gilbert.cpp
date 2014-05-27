@@ -3,6 +3,7 @@
 #include <sndfile.h>
 #include <sndfile.hh>
 #include "gilbertanalysis.h"
+#include "gilbertsignalutil.h"
 // #include "gilbertclassifier.h"
 
 int main( int argc, const char* argv[] ){
@@ -37,17 +38,17 @@ int main( int argc, const char* argv[] ){
     std::vector<double> sampleVec3(buffer3, buffer3 + sizeof(buffer3)/sizeof(*buffer3));
     std::vector<double> sampleVec4(buffer4, buffer4 + sizeof(buffer4)/sizeof(*buffer4));
 
-    gilbertanalysis* gilan = new gilbertanalysis();
+    std::vector<double> exact(gilbertsignalutil::getExactHit(sampleVec, 0.00000001));
+    std::vector<double> exact2(gilbertsignalutil::getExactHit(sampleVec2, 0.00000001));
+    std::vector<double> exact3(gilbertsignalutil::getExactHit(sampleVec3, 0.00000001));
+    std::vector<double> exact4(gilbertsignalutil::getExactHit(sampleVec4, 0.00000001));
 
-    std::vector<double> exact(gilan->getExactHit(sampleVec, 0.00000001));
-    std::vector<double> exact2(gilan->getExactHit(sampleVec2, 0.00000001));
-    std::vector<double> exact3(gilan->getExactHit(sampleVec3, 0.00000001));
-    std::vector<double> exact4(gilan->getExactHit(sampleVec4, 0.00000001));
+    gilbertclassifier *gitclass = new gilbertclassifier();
 
-    gilbertdb::setFeature(gilan->analyseHitBuffer(exact, "sound1"));
-    gilbertdb::setFeature(gilan->analyseHitBuffer(exact2, "sound2"));
-    gilbertdb::setFeature(gilan->analyseHitBuffer(exact3, "sound3"));
-    gilbertclassifier::lookupClosest(gilan->analyseHitBuffer(exact4));
+    gilbertdb::putFeature(gilbertanalysis::analyseHitBuffer(exact, "sound1"));
+    gilbertdb::putFeature(gilbertanalysis::analyseHitBuffer(exact2, "sound2"));
+    gilbertdb::putFeature(gilbertanalysis::analyseHitBuffer(exact3, "sound3"));
+    gitclass->lookupClosest(gilbertanalysis::analyseHitBuffer(exact4));
 
     // gilan->writeWAV(exact,exact.size(),info.id,info);
 

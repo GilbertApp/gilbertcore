@@ -6,7 +6,8 @@ gilbert:
 	g++ -c gilbert.cpp
 	g++ -c gilbertdb.cpp
 	g++ -c gilbertclassifier.cpp
-	g++ -lsndfile -lfftw3 -o gilbert gilbertanalysis.o gilbert.o gilbertdb.o soundfeatureset.o gilbertclassifier.o
+	g++ -c gilbertsignalutil.cpp
+	g++ -lsndfile -lfftw3 -o gilbert gilbertanalysis.o gilbert.o gilbertdb.o soundfeatureset.o gilbertclassifier.o gilbertsignalutil.o
 
 clean:
 	rm -rf *o gilbert

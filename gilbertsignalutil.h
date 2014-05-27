@@ -5,7 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <math.h>
-#include <algorithm> 
+#include <algorithm>
 
 class gilbertsignalutil{
 public:

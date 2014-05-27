@@ -1,9 +1,9 @@
 #include "gilbertclassifier.h"
 
 
-void gilbertclassifier::lookupClosest(sfs realTimeHit){
+std::string gilbertclassifier::lookupClosest(sfs realTimeHit){
     int k = 3;
-    
+
     std::vector<double> closest_d(k, 100000);
     std::vector<int> indices(k, 1000);
 
@@ -27,6 +27,7 @@ void gilbertclassifier::lookupClosest(sfs realTimeHit){
         std::cout<<db.at(indices[i]).id<<std::endl;
         std::cout<<closest_d.at(i)<<std::endl;
     }
+    return "";
 }
 
 

@@ -107,7 +107,28 @@ sfs gilbertanalysis::analyseHitBuffer(std::vector<double> &exactHitBuffer, std::
     
     return hitInfo;
 }
+//---------------------------------------------------------------
+sfs gilbertanalysis::analyseHitBuffer(std::vector<double> &exactHitBuffer){
 
+    int windowSize = 128;
+    //A vector of spectral centroid values
+    std::vector<double> centroidEnvelope;
+    //A vector of RMS values
+    std::vector<double> rmsEnvelope;
+
+    //Calculating the spectral centroid and RMS for each window.
+    for(int i = 0; i < exactHitBuffer.size(); i+=windowSize){
+        std::vector<double> window(&exactHitBuffer[i],&exactHitBuffer[i+windowSize]);
+        centroidEnvelope.push_back(calcSC(window));
+        rmsEnvelope.push_back(calcRMS(window));
+    }
+
+    //Creating a new sound feature set object.
+    sfs hitInfo = createSFS(centroidEnvelope, rmsEnvelope);
+    
+    return hitInfo;
+}
+//---------------------------------------------------------------
 sfs gilbertanalysis::createSFS(std::vector<double> centroids, std::vector<double> rmss, std::string drum){
 
     sfs hitInfo = {.id = drum, 
@@ -120,29 +141,16 @@ sfs gilbertanalysis::createSFS(std::vector<double> centroids, std::vector<double
 }
 
 //---------------------------------------------------------------
+sfs gilbertanalysis::createSFS(std::vector<double> centroids, std::vector<double> rmss){
+    std::string realTimeId = "realtime";
+    sfs hitInfo = {.id = realTimeId,
+                   .sc_mean = calcMean(centroids), .sc_stanDev = calcStanDev(centroids), .sc_min = getMin(centroids), .sc_max = getMax(centroids),
+                   .rms_mean = calcMean(rmss), .rms_stanDev = calcStanDev(rmss), .rms_min = getMin(rmss), .rms_max = getMax(rmss)
+                };
 
-// sfs gilbertanalysis::analyseHitBuffer(std::vector<double> &exactHitBuffer){
+    return hitInfo;
 
-//     int windowSize = 128;
-//     //A vector of spectral centroid values
-//     std::vector<double> centroidEnvelope;
-//     //A vector of RMS values
-//     std::vector<double> rmsEnvelope;
-
-//     //Calculating the spectral centroid and RMS for each window.
-//     for(int i = 0; i < exactHitBuffer.size(); i+=windowSize){
-//         std::vector<double> window(&exactHitBuffer[i],&exactHitBuffer[i+windowSize]);
-//         centroidEnvelope.push_back(calcSC(window));
-//         rmsEnvelope.push_back(calcRMS(window));
-//     }
-
-//     std::vector<double> sc_features = extractFeatures(centroidEnvelope);
-//     std::vector<double> rms_features = extractFeatures(rmsEnvelope);
-
-//     sfs hitInfo = getClosestHit(sc_features, rms_features);
-    
-//     return hitInfo;
-// }
+}
 
 /****************************FEATURE EXTRACTORS****************************/
 

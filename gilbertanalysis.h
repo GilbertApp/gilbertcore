@@ -43,15 +43,7 @@ public:
     //! @return a sound feature set representing the buffer
     //! @see analyseHitBuffer
     //! @see createSFS
-    sfs analyseHitBuffer(std::vector<double>& exactHitBuffer, std::string drum);
-    //! Returns a Sound Feature Set struct based on sets of centroid and rms values with an ID
-    //! @param centroids a buffer containing the centroids of a hit
-    //! @param rmss a buffer containing the rmss of a hit
-    //! @param drum the id of the sound
-    //! @return a sound feature set representing the buffer
-    //! @see analyseHitBuffer
-    //! @see createSFS
-    sfs createSFS(std::vector<double> centroids, std::vector<double> rmss, std::string drum);
+    sfs analyseHitBuffer(std::vector<double>& exactHitBuffer, std::string id);
     //! creates a sound feature set struct based on sets of centroid and rms values
     //! @param centroids a buffer containing the centroids of a hit
     //! @param rmss a buffer containing the rmss of a hit

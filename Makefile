@@ -14,3 +14,6 @@ install:
 
 uninstall:
 	rm /usr/local/bin/gilbert
+
+documentation:
+	doxygen Doxyfile

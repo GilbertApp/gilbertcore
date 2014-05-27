@@ -109,14 +109,20 @@ sfs gilbertanalysis::analyseHitBuffer(std::vector<double> &exactHitBuffer, std::
     }
 
     //Creating a new sound feature set object.
-    sfs hitInfo = {.id = drum, 
-                   .sc_mean = calcMean(centroidEnvelope), .sc_stanDev = calcStanDev(centroidEnvelope), .sc_min = getMin(centroidEnvelope), .sc_max = getMax(centroidEnvelope),
-                   .rms_mean = calcMean(rmsEnvelope), .rms_stanDev = calcStanDev(rmsEnvelope), .rms_min = getMin(rmsEnvelope), .rms_max = getMax(rmsEnvelope)
-                };
-
-    gilbertdb::setFeature(hitInfo);
+    sfs hitInfo = createSFS(centroidEnvelope, rmsEnvelope, drum);
     
     return hitInfo;
+}
+
+sfs gilbertanalysis::createSFS(std::vector<double> centroids, std::vector<double> rmss, std::string drum){
+
+    sfs hitInfo = {.id = drum, 
+                   .sc_mean = calcMean(centroids), .sc_stanDev = calcStanDev(centroids), .sc_min = getMin(centroids), .sc_max = getMax(centroids),
+                   .rms_mean = calcMean(rmss), .rms_stanDev = calcStanDev(rmss), .rms_min = getMin(rmss), .rms_max = getMax(rmss)
+                };
+
+    return hitInfo;
+
 }
 
 //---------------------------------------------------------------

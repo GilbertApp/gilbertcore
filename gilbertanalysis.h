@@ -6,8 +6,7 @@
 #include <fftw3.h>
 #include <sndfile.h>
 #include <sndfile.hh>
-// #include "soundfeatureset.c"
-#include "gilbertdb.h"
+#include "gilbertclassifier.h"
 
 class gilbertanalysis {
 public:
@@ -16,6 +15,7 @@ public:
     std::vector<double> getExactHit(std::vector<double>&hitBuffer, double threshold);
     sfs analyseHitBuffer(std::vector<double>& exactHitBuffer);
     sfs analyseHitBuffer(std::vector<double>& exactHitBuffer, std::string drum);
+    sfs createSFS(std::vector<double> centroids, std::vector<double> rmss, std::string drum);
     double calcMean(std::vector<double> v);
     double calcStanDev(std::vector<double> v);
     double getMin(std::vector<double> v);

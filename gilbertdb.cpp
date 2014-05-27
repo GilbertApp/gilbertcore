@@ -18,3 +18,11 @@ sfs *gilbertdb::getFeature(std::string _id){
 std::vector<sfs> gilbertdb::getFeatures(){
 	return features;
 }
+
+void gilbertdb::removeFeature(std::string _id){
+	for (int i = 0; i < features.size(); i++){
+		if(features.at(i).id == _id){
+			features.erase(features.begin() + i);
+		}
+	}
+}

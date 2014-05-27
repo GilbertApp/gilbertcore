@@ -2,10 +2,21 @@
 
 
 std::string gilbertclassifier::lookupClosest(sfs realTimeHit){
-
+    int k = 5;
+    int[] indices = new int[k];
+    boolean swapped = false;
     std::vector<sfs> db = gilbertdb::getFeatures();
     for (int i = 0; i < db.size(); i++){
-        double a = calcDistance(db.at(i), realTimeHit);
+        double d = calcDistance(db.at(i), realTimeHit);
+        for (int j = 0; j < indices.length; j++){
+            if(d < indices[j]){
+                for (int k = indices.length-1; k > j; k--){
+                    indices[k] == indices[k-1];
+                }
+                indices[j] = d;
+                break;
+            }
+        }
     }
 
     return "";

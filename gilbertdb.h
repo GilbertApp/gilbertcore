@@ -16,7 +16,7 @@ public:
     //! @param feature An input sound feature set
     //! @see lookupClosest()
     //! @see soundfeatureset
-    static void setFeature(sfs feature);
+    static void putFeature(sfs feature);
     //! retrieves a specific feature as requested by id string
     //! @param _id A string identifying a specific class
     //! @return A sound feature set of class feature

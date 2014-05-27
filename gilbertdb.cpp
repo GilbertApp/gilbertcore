@@ -2,7 +2,7 @@
 
 std::vector<sfs> features;
 
-void gilbertdb::setFeature(sfs feature){
+void gilbertdb::putFeature(sfs feature){
 	features.push_back(feature);
 }
 

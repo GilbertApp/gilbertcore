@@ -1,11 +1,7 @@
 #include "gilbertanalysis.h"
 
-// std::vector<sfs> feature_sets;
-
-
 //--------------------------------------------------------------
 double gilbertanalysis::calcRMS(std::vector<double>& buffer){
-
     double count = 0;
     for(int i=0; i<buffer.size(); i++){
         count += pow(buffer.at(i),2);
@@ -17,7 +13,6 @@ double gilbertanalysis::calcRMS(std::vector<double>& buffer){
 
 //--------------------------------------------------------------
 double gilbertanalysis::calcSC(std::vector<double>& buffer){
-
     //TODO: Normalize centroid. Dividing by nyquist is not good as most of the centroid values will be < 5000,
     //so we'll lose half of the range.
 
@@ -41,7 +36,6 @@ double gilbertanalysis::calcSC(std::vector<double>& buffer){
         sumMags += mag;
         sumFreqByMags += mag*i*samplerateDividedBySize;
     }
-    // std::cout<<sumFreqByMags<<std::endl;
     centroid = sumFreqByMags/sumMags;
 
     return centroid;

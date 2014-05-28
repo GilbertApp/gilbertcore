@@ -47,6 +47,7 @@ double gilbertclassifier::calcDistance(sfs a, sfs b){
 
 }
 
+
 std::string gilbertclassifier::findMostFrequentId(std::vector<string> v){
     //TBD: Write function :P
 }

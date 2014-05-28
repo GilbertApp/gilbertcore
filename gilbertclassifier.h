@@ -17,6 +17,10 @@ class gilbertclassifier {
     //! @return A double representing the distance between the two input feature sets
     //! @see lookupClosest()
     double calcDistance(sfs a, sfs b);
+    //! searches the most frequent string in a string vector
+    //! @param v The vector that will be scanned
+    //! @return A string representing the most frequent string
+    //! @see lookupClosest
     std::string findMostFrequentId(std::vector<string> v);
 public:
 	gilbertdb db;

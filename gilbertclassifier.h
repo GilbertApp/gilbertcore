@@ -18,6 +18,13 @@ class gilbertclassifier {
     //! @see lookupClosest()
     double calcDistance(sfs a, sfs b);
 public:
+	gilbertdb db;
+	//! a constructor for gilbertclassifier
+	//! @param db The database object.
+	//! @see gilbertdb
+	gilbertclassifier(gilbertdb db){
+		this->db = db;
+	}
     //! returns the classification of an input sound feature set
     //! @param realTimeHit An input sound feature set
     //! @return A string representing the classification of the input set

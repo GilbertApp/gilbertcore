@@ -7,9 +7,10 @@ std::string gilbertclassifier::lookupClosest(sfs realTimeHit){
     std::vector<double> closest_d(k, 100000);
     std::vector<int> indices(k, 1000);
 
-    std::vector<sfs> db = gilbertdb::getFeatures();
-    for (int i = 0; i < db.size(); i++){
-        double d = calcDistance(db.at(i), realTimeHit);
+
+    std::vector<sfs> dbFeatures = db.getFeatures();
+    for (int i = 0; i < dbFeatures.size(); i++){
+        double d = calcDistance(dbFeatures.at(i), realTimeHit);
         for (int j = 0; j < k; j++){
             if(d < closest_d.at(j)){
                 for (int m = k-1; m > j; m--){
@@ -24,7 +25,7 @@ std::string gilbertclassifier::lookupClosest(sfs realTimeHit){
     }
 
     for (int i = 0; i < k; i++){
-        std::cout<<db.at(indices[i]).id<<std::endl;
+        std::cout<<dbFeatures.at(indices[i]).id<<std::endl;
         std::cout<<closest_d.at(i)<<std::endl;
     }
     return "";

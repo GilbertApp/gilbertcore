@@ -22,18 +22,21 @@ std::string gilbertclassifier::lookupClosest(sfs realTimeHit){
             }
         }
     }
-
-    for (int i = 0; i < k; i++){
-        std::cout<<dbFeatures.at(indices[i]).id<<std::endl;
-        std::cout<<closest_d.at(i)<<std::endl;
+    std::vector<std::string> ids(k);
+    for (int i = 0; i < indices.size(); i++){
+        ids.at(i) = dbFeatures.at(indices.at(i)).id;
     }
-    return "";
+    /*for testing purposes!!*/
+        ids.push_back("sound1");
+    /************************/
+    std::string classification= findMostFrequentId(ids, dbFeatures);
+
+    return classification;
 }
 
 double gilbertclassifier::calcDistance(sfs a, sfs b){
 
     double distance = 0;
-
     distance += pow((a.sc_mean - b.sc_mean), 2);
     distance += pow((a.sc_stanDev - b.sc_stanDev), 2);
     distance += pow((a.sc_min - b.sc_min), 2);
@@ -47,7 +50,21 @@ double gilbertclassifier::calcDistance(sfs a, sfs b){
 
 }
 
+std::string gilbertclassifier::findMostFrequentId(std::vector<std::string> closestIds, std::vector<sfs> dbFeatures){
 
-std::string gilbertclassifier::findMostFrequentId(std::vector<string> v){
-    //TBD: Write function :P
+    std::vector<int> counters(dbFeatures.size(), 0);
+    std::sort(closestIds.begin(), closestIds.end());
+    for (int i = 0; i < dbFeatures.size(); i++){
+        for (int j = 0; j < closestIds.size(); j++){
+            if(dbFeatures.at(i).id == closestIds.at(j)){
+                counters.at(i)++;
+            }
+        }
+    }
+
+    int matchedIndex = std::distance(counters.begin(), max_element(counters.begin(),counters.end()));
+    std::string matchedId = dbFeatures.at(matchedIndex).id;
+
+    return matchedId;
+
 }

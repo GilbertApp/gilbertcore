@@ -21,7 +21,7 @@ class gilbertclassifier {
     //! @param v The vector that will be scanned
     //! @return A string representing the most frequent string
     //! @see lookupClosest
-    std::string findMostFrequentId(std::vector<string> v);
+    std::string findMostFrequentId(std::vector<std::string> closestIds, std::vector<sfs> dbFeatures);
 public:
 	gilbertdb db;
 	//! a constructor for gilbertclassifier

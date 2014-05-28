@@ -26,10 +26,10 @@ std::string gilbertclassifier::lookupClosest(sfs realTimeHit){
     for (int i = 0; i < indices.size(); i++){
         ids.at(i) = dbFeatures.at(indices.at(i)).id;
     }
-    /*for testing purposes!!*/
+    /*For testing purposes!!*/
         ids.push_back("sound1");
     /************************/
-    std::string classification= findMostFrequentId(ids, dbFeatures);
+    std::string classification= findMostRecurringId(ids, dbFeatures);
 
     return classification;
 }
@@ -50,7 +50,7 @@ double gilbertclassifier::calcDistance(sfs a, sfs b){
 
 }
 
-std::string gilbertclassifier::findMostFrequentId(std::vector<std::string> closestIds, std::vector<sfs> dbFeatures){
+std::string gilbertclassifier::findMostRecurringId(std::vector<std::string> closestIds, std::vector<sfs> dbFeatures){
 
     std::vector<int> counters(dbFeatures.size(), 0);
     std::sort(closestIds.begin(), closestIds.end());

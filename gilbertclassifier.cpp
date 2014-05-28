@@ -7,7 +7,6 @@ std::string gilbertclassifier::lookupClosest(sfs realTimeHit){
     std::vector<double> closest_d(k, 100000);
     std::vector<int> indices(k, 1000);
 
-
     std::vector<sfs> dbFeatures = db.getFeatures();
     for (int i = 0; i < dbFeatures.size(); i++){
         double d = calcDistance(dbFeatures.at(i), realTimeHit);
@@ -31,7 +30,6 @@ std::string gilbertclassifier::lookupClosest(sfs realTimeHit){
     return "";
 }
 
-
 double gilbertclassifier::calcDistance(sfs a, sfs b){
 
     double distance = 0;
@@ -46,4 +44,9 @@ double gilbertclassifier::calcDistance(sfs a, sfs b){
     distance += pow((a.rms_max - b.rms_max), 2);
     distance = sqrt(distance);
     return distance;
+
+}
+
+std::string gilbertclassifier::findMostFrequentId(std::vector<string> v){
+    //TBD: Write function :P
 }

@@ -21,3 +21,6 @@ uninstall:
 
 docs:
 	doxygen Doxyfile
+
+docsclean:
+	rm -R docs

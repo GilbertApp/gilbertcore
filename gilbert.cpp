@@ -48,7 +48,8 @@ int main( int argc, const char* argv[] ){
     gildb->putFeature(gilbertanalysis::analyseHitBuffer(exact3, "sound3"));
 
     gilbertclassifier *gilclass = new gilbertclassifier(*gildb);
-    gilclass->lookupClosest(gilbertanalysis::analyseHitBuffer(exact4));
+    std::string match = gilclass->lookupClosest(gilbertanalysis::analyseHitBuffer(exact4));
+    std::cout<<match<<std::endl;
 
     // gilan->writeWAV(exact,exact.size(),info.id,info);
 

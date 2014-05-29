@@ -7,7 +7,7 @@
 #include <math.h>
 #include <algorithm>
 #include <sndfile.h>
-#include "soundfeatureset.c"
+#include "soundfeatureset.cpp"
 #include "gilbertanalysis.h"
 #ifndef GILBERTSIGNALUTIL_H
 #define GILBERTSIGNALUTIL_H

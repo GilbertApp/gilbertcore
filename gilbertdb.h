@@ -8,7 +8,7 @@
 #include <vector>
 #include <math.h>
 #include <algorithm>
-#include "soundfeatureset.c"
+#include "soundfeatureset.cpp"
 #ifndef GILBERTDB_H
 #define GILBERTDB_H
 

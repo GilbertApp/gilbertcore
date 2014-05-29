@@ -1,5 +1,5 @@
 .DS_Store
-./audio/*.wav
+*.wav
 *.o
 gilbert
 docs

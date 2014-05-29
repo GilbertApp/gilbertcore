@@ -1,7 +1,7 @@
 all: gilbert
 
 gilbert:
-	g++ -c soundfeatureset.c
+	g++ -c soundfeatureset.cpp
 	g++ -c gilbertanalysis.cpp
 	g++ -c gilbertdb.cpp
 	g++ -c gilbertclassifier.cpp

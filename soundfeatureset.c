@@ -3,7 +3,9 @@
 //! This struct is the core data structure for the analysis output on an audio signal. It's used in representing signals for the classification engine
 //! to look up the closest match of.
 
+#ifdef __cplus
 #include <iostream>
+#endif
 #include <stdio.h>
 #ifndef SOUNDFEATURESET_C
 #define SOUNDFEATURESET_C

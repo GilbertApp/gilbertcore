@@ -7,9 +7,9 @@ std::string gilbertclassifier::lookupClosest(sfs realTimeHit){
     std::vector<double> closest_d(k, 100000);
     std::vector<int> indices(k, 1000);
 
-    std::vector<sfs> db = gilbertdb::getFeatures();
-    for (int i = 0; i < db.size(); i++){
-        double d = calcDistance(db.at(i), realTimeHit);
+    std::vector<sfs> dbFeatures = db.getFeatures();
+    for (int i = 0; i < dbFeatures.size(); i++){
+        double d = calcDistance(dbFeatures.at(i), realTimeHit);
         for (int j = 0; j < k; j++){
             if(d < closest_d.at(j)){
                 for (int m = k-1; m > j; m--){
@@ -22,19 +22,21 @@ std::string gilbertclassifier::lookupClosest(sfs realTimeHit){
             }
         }
     }
-
-    for (int i = 0; i < k; i++){
-        std::cout<<db.at(indices[i]).id<<std::endl;
-        std::cout<<closest_d.at(i)<<std::endl;
+    std::vector<std::string> ids(k);
+    for (int i = 0; i < indices.size(); i++){
+        ids.at(i) = dbFeatures.at(indices.at(i)).id;
     }
-    return "";
-}
+    /*For testing purposes!!*/
+        ids.push_back("sound1");
+    /************************/
+    std::string classification= findMostRecurringId(ids, dbFeatures);
 
+    return classification;
+}
 
 double gilbertclassifier::calcDistance(sfs a, sfs b){
 
     double distance = 0;
-
     distance += pow((a.sc_mean - b.sc_mean), 2);
     distance += pow((a.sc_stanDev - b.sc_stanDev), 2);
     distance += pow((a.sc_min - b.sc_min), 2);
@@ -45,4 +47,24 @@ double gilbertclassifier::calcDistance(sfs a, sfs b){
     distance += pow((a.rms_max - b.rms_max), 2);
     distance = sqrt(distance);
     return distance;
+
+}
+
+std::string gilbertclassifier::findMostRecurringId(std::vector<std::string> closestIds, std::vector<sfs> dbFeatures){
+
+    std::vector<int> counters(dbFeatures.size(), 0);
+    std::sort(closestIds.begin(), closestIds.end());
+    for (int i = 0; i < dbFeatures.size(); i++){
+        for (int j = 0; j < closestIds.size(); j++){
+            if(dbFeatures.at(i).id == closestIds.at(j)){
+                counters.at(i)++;
+            }
+        }
+    }
+
+    int matchedIndex = std::distance(counters.begin(), max_element(counters.begin(),counters.end()));
+    std::string matchedId = dbFeatures.at(matchedIndex).id;
+
+    return matchedId;
+
 }

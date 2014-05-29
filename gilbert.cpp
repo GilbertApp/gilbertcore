@@ -42,12 +42,14 @@ int main( int argc, const char* argv[] ){
     std::vector<double> exact3(gilbertsignalutil::getExactHit(sampleVec3, 0.00000001));
     std::vector<double> exact4(gilbertsignalutil::getExactHit(sampleVec4, 0.00000001));
 
-    gilbertclassifier *gitclass = new gilbertclassifier();
+    gilbertdb *gildb = new gilbertdb();
+    gildb->putFeature(gilbertanalysis::analyseHitBuffer(exact, "sound1"));
+    gildb->putFeature(gilbertanalysis::analyseHitBuffer(exact2, "sound2"));
+    gildb->putFeature(gilbertanalysis::analyseHitBuffer(exact3, "sound3"));
 
-    gilbertdb::putFeature(gilbertanalysis::analyseHitBuffer(exact, "sound1"));
-    gilbertdb::putFeature(gilbertanalysis::analyseHitBuffer(exact2, "sound2"));
-    gilbertdb::putFeature(gilbertanalysis::analyseHitBuffer(exact3, "sound3"));
-    gitclass->lookupClosest(gilbertanalysis::analyseHitBuffer(exact4));
+    gilbertclassifier *gilclass = new gilbertclassifier(*gildb);
+    std::string match = gilclass->lookupClosest(gilbertanalysis::analyseHitBuffer(exact4));
+    std::cout<<match<<std::endl;
 
     // gilan->writeWAV(exact,exact.size(),info.id,info);
 

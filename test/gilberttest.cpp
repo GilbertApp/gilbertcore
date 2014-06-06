@@ -2,8 +2,7 @@
 #include <fftw3.h>
 #include <sndfile.h>
 #include <sndfile.hh>
-#include "gilbertanalysis.h"
-#include "gilbertsignalutil.h"
+#include "../gilbert.h"
 
 int main( int argc, const char* argv[] ){
 

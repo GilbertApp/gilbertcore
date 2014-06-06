@@ -5,9 +5,13 @@
 #include "gilbertanalysis.h"
 #include "gilbertsignalutil.h"
 
-class gilbertt{
+class gilbert{
 public:
     gilberttest();
     ~gilberttest();
     
+    std::string registerBuffer(std::string name);
+    std::string lookupBuffer();
+    void deleteLastBuffer();
+    void deleteBufferByID(std::string id);
 };

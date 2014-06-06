@@ -7,8 +7,8 @@
 
 class gilbert{
 public:
-    gilberttest();
-    ~gilberttest();
+    gilbert();
+    ~gilbert();
     
     std::string registerBuffer(std::string name);
     std::string lookupBuffer();

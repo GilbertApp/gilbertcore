@@ -36,21 +36,21 @@ public:
     //! Returns a Sound Feature Set struct representative of the signal input
     //! @param exactHitBuffer a buffer containing the precise, trimmed hit
     //! @return a sound feature set representing the buffer
-    //! @see analyseHitBuffer
+    //! @see analyseExactHitBuffer
     //! @see createSFS
-    static sfs analyseHitBuffer(std::vector<double>& exactHitBuffer);
+    static sfs analyseExactHitBuffer(std::vector<double>& exactHitBuffer);
     //! Returns a Sound Feature Set struct representative of the signal input with an ID
     //! @param exactHitBuffer a buffer containing the precise, trimmed hit
     //! @param id the id of the sound
     //! @return a sound feature set representing the buffer
-    //! @see analyseHitBuffer
+    //! @see analyseExactHitBuffer
     //! @see createSFS
-    static sfs analyseHitBuffer(std::vector<double>& exactHitBuffer, std::string id);
+    static sfs analyseExactHitBuffer(std::vector<double>& exactHitBuffer, std::string id);
     //! creates a sound feature set struct based on sets of centroid and rms values
     //! @param centroids a buffer containing the centroids of a hit
     //! @param rmss a buffer containing the rmss of a hit
     //! @return a sound feature set representing the buffer
-    //! @see analyseHitBuffer
+    //! @see analyseExactHitBuffer
     //! @see createSFS
     static sfs createSFS(std::vector<double> centroids, std::vector<double> rmss);
     //! Calculates the mean value of a vector

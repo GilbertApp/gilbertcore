@@ -1,15 +1,31 @@
 #include "gilbertsignalutil.h"
 
 //---------------------------------------------------------------
-std::vector<double> gilbertsignalutil::getExactHit(std::vector<double> &hitBuffer, double threshold){
+std::vector<double> gilbertsignalutil::getExactHitBuffer(std::vector<double> &hitBuffer, double threshold){
 
-    //Every how many samples should the RMS be calculated.
-    int resolution = 100;
-    //Initialisation of the hightest RMS bin.
-    int highestRMSBin = 0;
     //A new vector that will contain the exact hit.
     int exactHitLength = 4096;
     std::vector<double> exactHit(exactHitLength);
+   
+
+    for(int j = 0 ; j < exactHit.size(); j++) {
+        //Populates a new vector with the values of the exact hit.
+        //This would crash with an array out of bounds if the hit was done at the end of the two seconds.
+        exactHit.at(j)=hitBuffer.at(j+getOnsetIndex(hitBuffer, threshold));
+    }
+
+    //returns ~100 milliseconds of the exact hit.
+    return exactHit;
+
+}
+
+//---------------------------------------------------------------
+int gilbertsignalutil::getOnsetIndex(std::vector<double> &hitBuffer, double threshold){
+
+     //Every how many samples should the RMS be calculated.
+    int resolution = 100;
+    //Initialisation of the hightest RMS bin.
+    int highestRMSBin = 0;
     //An array of doubles, which each representing the RMS of 100 samples.
     std::vector<double> rmsInEachBin;
     //Setting the threshold.
@@ -34,14 +50,7 @@ std::vector<double> gilbertsignalutil::getExactHit(std::vector<double> &hitBuffe
         }
     }
 
-    for(int j = 0 ; j < exactHit.size(); j++) {
-        // populates a new vector with the values of the exact hit.
-        //This would crash with an array out of bounds if the hit was done at the end of the two seconds.
-        exactHit.at(j)=hitBuffer.at(j+highestRMSBin);
-    }
-
-    //returns ~200 milliseconds of the exact hit.
-    return exactHit;
+    return highestRMSBin;
 
 }
 

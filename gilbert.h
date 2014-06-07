@@ -10,8 +10,7 @@ class gilbert{
     gilbertdb *gdb = new gilbertdb();
     gilbertclassifier *gc = new gilbertclassifier(*gdb);
 
-    double threshold = 0;
-
+    std::vector<double> twoSecBuffer;
     std::string drumname;
     
 
@@ -21,11 +20,9 @@ public:
     
     std::string audioIn(std::vector<double> buffer);
     //analysing the hit and adding it to the database.
-    std::string registerBuffer(std::string name);
+    void registerBuffer(std::string name);
 
     void deleteLastBuffer();
     void deleteBufferByID(std::string id);
 
-    void setThreshold(double _threshold);
-    double getThreshold();
 };

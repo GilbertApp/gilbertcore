@@ -7,14 +7,16 @@
 
 class gilbert{
 
-	gilbertdb *gdb = new gilbertdb();
-	gilbertclassifier *gc = new gilbertclassifier(*gdb);
+    gilbertdb *gdb = new gilbertdb();
+    gilbertclassifier *gc = new gilbertclassifier(*gdb);
 
-	std::vector<double> currentBuffer;
-	void setCurrentBuffer(buffer);
-	std::vector<double> getCurrentBuffer();
-	double threshold = 0;
-	
+    std::vector<double> currentBuffer;
+    void setCurrentBuffer(buffer);
+    std::vector<double> getCurrentBuffer();
+    double threshold = 0;
+
+    std::string drumname;
+    
 
 public:
     gilbert();

@@ -43,8 +43,8 @@ double gilbertanalysis::calcSC(std::vector<double>& buffer){
 }
 
 //---------------------------------------------------------------
-sfs gilbertanalysis::analyseHitBuffer(std::vector<double> &exactHitBuffer, std::string drum){
-    sfs hitInfo = analyseHitBuffer(exactHitBuffer);
+sfs gilbertanalysis::analyseExactHitBuffer(std::vector<double> &exactHitBuffer, std::string drum){
+    sfs hitInfo = analyseExactHitBuffer(exactHitBuffer);
 
     hitInfo.id = drum;
     
@@ -52,7 +52,7 @@ sfs gilbertanalysis::analyseHitBuffer(std::vector<double> &exactHitBuffer, std::
 }
 
 //---------------------------------------------------------------
-sfs gilbertanalysis::analyseHitBuffer(std::vector<double> &exactHitBuffer){
+sfs gilbertanalysis::analyseExactHitBuffer(std::vector<double> &exactHitBuffer){
 
     int windowSize = 128;
     //A vector of spectral centroid values

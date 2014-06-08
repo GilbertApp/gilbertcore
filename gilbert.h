@@ -36,4 +36,5 @@ public:
     //! the id of the sfs to be deleted
     void deleteBufferByID(std::string id);
 
+    std::string test();
 };

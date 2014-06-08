@@ -5,7 +5,7 @@ gilbert::gilbert(){
 }
 
 std::string gilbert::audioIn(std::vector<double> buffer){
-    int sr = 44050;
+    int sr = 44100;
     int twoSeconds = sr*2;
     if(this->drumname != ""){
         if(twoSecBuffer.size() < twoSeconds){

@@ -1,19 +1,19 @@
 #include "gilbert.h"
 
 
-std::string *gilbert::audioIn(std::vector<double> buffer){
+std::string gilbert::audioIn(std::vector<double> buffer){
     int sr = 44050;
     int twoSeconds = sr*2;
-    if(self.drumname !== ''){
+    if(this->drumname != ""){
         if(twoSecBuffer.size() < twoSeconds){
-            twoSecBuffer.push_back(buffer);
+            twoSecBuffer.insert(twoSecBuffer.end(), buffer.begin(), buffer.end());
         }
         else{
             std::vector<double> exactHit = gilbertsignalutil::getExactHitBuffer(twoSecBuffer, 0.0000001);
-            sfs hitInfo = gilbertanalysis::analyseExactHitBuffer(exactHit, self.drumname);
+            sfs hitInfo = gilbertanalysis::analyseExactHitBuffer(exactHit, this->drumname);
             gdb->putFeature(hitInfo);
             twoSecBuffer.clear();
-            self.drumname = '';
+            this->drumname = "";
         }
         return NULL;
     }
@@ -26,7 +26,7 @@ std::string *gilbert::audioIn(std::vector<double> buffer){
 }
 
 void gilbert::registerBuffer(std::string name){
-    self.drumname = name;
+    this->drumname = name;
 }
 
 std::string gilbert::test(){

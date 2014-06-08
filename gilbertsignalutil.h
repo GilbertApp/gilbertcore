@@ -18,7 +18,7 @@ class gilbertsignalutil{
     //! @param hitBuffer a buffer containing the hit and surrounding sound
     //! @param threshold a minimum threshold to find a peak
     //! @return the index of the onset
-    int getOnsetIndex(std::vector<double> &hitBuffer, double threshold);
+    static int getOnsetIndex(std::vector<double> &hitBuffer, double threshold);
 
 public:
     //! Extracts an 'exact hit' signal buffer from a longer buffer based on peak detection

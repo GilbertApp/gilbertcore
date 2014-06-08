@@ -28,3 +28,7 @@ std::string *gilbert::audioIn(std::vector<double> buffer){
 void gilbert::registerBuffer(std::string name){
     self.drumname = name;
 }
+
+std::string gilbert::test(){
+    return "gilbert is loaded";
+}

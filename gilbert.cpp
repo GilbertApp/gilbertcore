@@ -1,5 +1,8 @@
 #include "gilbert.h"
 
+gilbert::gilbert(){
+    
+}
 
 std::string gilbert::audioIn(std::vector<double> buffer){
     int sr = 44050;

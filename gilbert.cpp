@@ -7,6 +7,7 @@ gilbert::gilbert(){
 std::string gilbert::audioIn(std::vector<double> buffer){
     int sr = 44100;
     int twoSeconds = sr*2;
+    std::cout<<buffer[0]<<std::endl;
     if(this->drumname != ""){
         if(twoSecBuffer.size() < twoSeconds){
             twoSecBuffer.insert(twoSecBuffer.end(), buffer.begin(), buffer.end());
@@ -30,6 +31,7 @@ std::string gilbert::audioIn(std::vector<double> buffer){
 
 void gilbert::registerBuffer(std::string name){
     this->drumname = name;
+    std::cout<<"Gilbert acknowledges that "+this->drumname+" has been recieved"<<std::endl;
 }
 
 std::string gilbert::test(){
